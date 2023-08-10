@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ImProcessor.Extensions;
+using ImProcessor.Helper;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using OpenCvSharp;
@@ -33,32 +34,24 @@ namespace ImProcessor.Examples
 
             this.S1.ValueChanged += ValueChanged;
 
-            this.S1.Value = 1;
+            OriginalViewer.ImageSource = BitmapFrame.Create(_image.Mats![0].ToBitmapSource());
 
-            OriginalViewer.ImageSource = BitmapFrame.Create(_image.Mats[0].ToBitmapSource());
-            //OriginalViewer.ImageSource = BitmapFrame.Create(img.GetOriginal().ToBitmapSource());
+            this.S1.Value = 2;
         }
 
-        private Image _image = new Image(@"C:\Users\haeer\Pictures\1.jpg");
+        //private Image _image = new Image(@"C:\Users\haeer\Pictures\1.jpg");
+        //private Image _image = new Image(@"C:\Users\haeer\Pictures\hela.tif");
+        private Image _image = new Image(@"C:\Users\haeer\Pictures\d48.tif");
+
 
         private void ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
         {
             Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                var img = _image.SetLut((ColormapTypes)S1.Value);
-
-                if (img.Mats!.Length != 1) throw new Exception("error");
+                var img = _image.SetLut(LutHelper.Blue);
 
                 PresentViewer.ImageSource = BitmapFrame.Create(img.Mats[0].ToBitmapSource());
 
-
-                //PresentChartsView.Series = new ISeries[]
-                //{
-                //    new ColumnSeries<float>()
-                //    {
-                //        Values = data.ToList()
-                //    }
-                //};
             });
         }
     }

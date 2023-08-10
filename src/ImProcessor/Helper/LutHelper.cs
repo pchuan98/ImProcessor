@@ -1,9 +1,4 @@
 ﻿using OpenCvSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImProcessor.Helper;
 
@@ -11,6 +6,8 @@ public static class LutHelper
 {
     public static void Generate(ref Mat mat, bool red, bool green, bool blue)
     {
+
+
         for (var i = 0; i < 256; i++)
         {
             var b = (byte)(blue ? i : 0);
@@ -108,5 +105,20 @@ public static class LutHelper
             Generate(ref _gray, true, true, true);
             return _gray!;
         }
+    }
+
+    public static Mat Generate(MatType type)
+    {
+        if (type == MatType.CV_8U)
+            Console.WriteLine("ok");
+        if (type == MatType.CV_16U)
+            Console.WriteLine("ok");
+
+        if (type == MatType.CV_8UC1 || type == MatType.CV_8UC3)
+            throw new NotImplementedException();
+        else if (type == MatType.CV_16SC1)
+            throw new NotImplementedException();
+
+        return new Mat();
     }
 }
