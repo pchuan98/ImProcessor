@@ -1,13 +1,37 @@
 ﻿using OpenCvSharp;
+using System;
 
 namespace ImProcessor.Helper;
 
 public static class LutHelper
 {
-    public static void Generate(ref Mat mat, bool red, bool green, bool blue)
+    /// <summary>
+    /// 0 - CV_8U 
+    /// 1 - CV_8S 
+    /// 2 - CV_16U 
+    /// 3 - CV_16S 
+    /// 4 - CV_32S 
+    /// 5 - CV_32F 
+    /// 6 - CV_64F 
+    /// 7 - CV_USRTYPE1 
+    /// </summary>
+    /// <param name="mode"></param>
+    /// <param name="red"></param>
+    /// <param name="green"></param>
+    /// <param name="blue"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static Mat Generate(int mode, bool red, bool green, bool blue)
+        => mode switch
+        {
+            0 => GetByteMat(red, green, blue),
+            2 => GetIntMat(red, green, blue),
+            _ => throw new Exception("The data type is not supported."),
+        };
+
+    private static Mat GetByteMat(bool red, bool green, bool blue)
     {
-
-
+        var mat = new Mat(256, 1, MatType.CV_8UC1);
         for (var i = 0; i < 256; i++)
         {
             var b = (byte)(blue ? i : 0);
@@ -16,109 +40,71 @@ public static class LutHelper
 
             mat.Set(i, new Vec3b(b, g, r));
         }
-
+        return mat;
     }
 
-    private static Mat? _green = null;
-    public static Mat Green
+    private static Mat GetIntMat(bool red, bool green, bool blue)
     {
-        get
+        var mat = new Mat(256, 1, MatType.CV_16UC1);
+        for (var i = 0; i < 65535; i++)
         {
-            if (_green != null) return _green!;
+            var b = (int)(blue ? i : 0);
+            var r = (int)(red ? i : 0);
+            var g = (int)(green ? i : 0);
 
-            _green = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _green, false, true, false);
-            return _green!;
+            mat.Set(i, new Vec3i(b, g, r));
         }
+
+        return mat;
     }
 
-    private static Mat? _red = null;
-    public static Mat Red
-    {
-        get
+    #region 单色
+
+    public static Mat Green(int mode)
+        => Generate(mode, false, true, false);
+
+    public static Mat Red(int mode)
+        => Generate(mode, true, false, false);
+
+    public static Mat Blue(int mode)
+        => Generate(mode, false, false, true);
+
+    public static Mat Gray(int mode)
+        => Generate(mode, true, true, true);
+
+    public static Mat Yellow(int mode)
+        => Generate(mode, true, true, false);
+
+    public static Mat Cyan(int mode)
+        => Generate(mode, false, true, true);
+
+    public static Mat Magenta(int mode)
+        => Generate(mode, true, false, true);
+
+    /// <summary>
+    /// 1 - Green
+    /// 2 - Red
+    /// 3 - Blue
+    /// 4 - Gray
+    /// 5 - Yellow
+    /// 6 - Cyan
+    /// 7 - Magenta
+    /// </summary>
+    /// <param name="mode"></param>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    public static Mat Monochrome(int mode, int color)
+        => color switch
         {
-            if (_red != null) return _red!;
+            1 => Green(mode),
+            2 => Red(mode),
+            3 => Blue(mode),
+            4 => Gray(mode),
+            5 => Yellow(mode),
+            6 => Cyan(mode),
+            7 => Magenta(mode),
+            _ => throw new Exception("The color is not supported."),
+        };
 
-            _red = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _red, true, false, false);
-
-            return _red!;
-        }
-    }
-
-    private static Mat? _blue = null;
-    public static Mat Blue
-    {
-        get
-        {
-            if (_blue != null) return _blue!;
-            _blue = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _blue, false, false, true);
-            return _blue!;
-        }
-    }
-
-    private static Mat? _yellow = null;
-    public static Mat Yellow
-    {
-        get
-        {
-            if (_yellow != null) return _yellow!;
-            _yellow = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _yellow, true, true, false);
-            return _yellow!;
-        }
-    }
-
-    private static Mat? _cyan = null;
-    public static Mat Cyan
-    {
-        get
-        {
-            if (_cyan != null) return _cyan!;
-            _cyan = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _cyan, false, true, true);
-            return _cyan!;
-        }
-    }
-
-    private static Mat? _magenta = null;
-    public static Mat Magenta
-    {
-        get
-        {
-            if (_magenta != null) return _magenta!;
-            _magenta = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _magenta, true, false, true);
-            return _magenta!;
-        }
-    }
-
-
-    private static Mat? _gray = null;
-    public static Mat Gray
-    {
-        get
-        {
-            if (_gray != null) return _gray!;
-            _gray = new Mat(256, 1, MatType.CV_8UC3);
-            Generate(ref _gray, true, true, true);
-            return _gray!;
-        }
-    }
-
-    public static Mat Generate(MatType type)
-    {
-        if (type == MatType.CV_8U)
-            Console.WriteLine("ok");
-        if (type == MatType.CV_16U)
-            Console.WriteLine("ok");
-
-        if (type == MatType.CV_8UC1 || type == MatType.CV_8UC3)
-            throw new NotImplementedException();
-        else if (type == MatType.CV_16SC1)
-            throw new NotImplementedException();
-
-        return new Mat();
-    }
+    #endregion
 }

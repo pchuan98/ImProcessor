@@ -54,7 +54,7 @@ public static class LutExtension
         foreach (var mat in image.Mats!)
         {
             var newMat = new Mat();
-            Cv2.ApplyColorMap(mat, newMat, LutHelper.Generate(mat.Type()));
+            Cv2.ApplyColorMap(mat, newMat, map);
             mats.Add(newMat);
         }
 

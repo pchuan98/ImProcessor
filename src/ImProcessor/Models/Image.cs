@@ -24,8 +24,14 @@ public class Image : IDisposable
         Mats = mats;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public Image() { }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public Mat[]? Mats { get; set; }
 
     /// <summary>
@@ -38,6 +44,9 @@ public class Image : IDisposable
     /// </summary>
     public FileType FileType { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void Dispose()
     {
         if (Mats == null) return;
@@ -47,7 +56,13 @@ public class Image : IDisposable
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsEmpty => Mats == null || Mats.Length == 0;
 
+    /// <summary>
+    /// 
+    /// </summary>
     ~Image() => Dispose();
 }

@@ -43,12 +43,14 @@ namespace ImProcessor.Examples
         //private Image _image = new Image(@"C:\Users\haeer\Pictures\hela.tif");
         private Image _image = new Image(@"C:\Users\haeer\Pictures\d48.tif");
 
-
+        public List<Func<Mat>> Funcs = new List<Func<Mat>>();
         private void ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
         {
             Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                var img = _image.SetLut(LutHelper.Blue);
+                var type = _image.MatType();
+
+                var img = _image.SetLut(LutHelper.Monochrome(type,(int)S1.Value));
 
                 PresentViewer.ImageSource = BitmapFrame.Create(img.Mats[0].ToBitmapSource());
 
