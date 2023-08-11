@@ -25,7 +25,7 @@ public static class LutHelper
         => mode switch
         {
             0 => GetByteMat(red, green, blue),
-            2 => GetIntMat(red, green, blue),
+            2 => throw new Exception("GetIntMat(red, green, blue) This part of the functionality is undergoing refinement, as OpenCV's support for 16-bit is limited."),
             _ => throw new Exception("The data type is not supported."),
         };
 
@@ -45,7 +45,7 @@ public static class LutHelper
 
     private static Mat GetIntMat(bool red, bool green, bool blue)
     {
-        var mat = new Mat(256, 1, MatType.CV_16UC1);
+        var mat = new Mat(65535, 1, MatType.CV_16UC1);
         for (var i = 0; i < 65535; i++)
         {
             var b = (int)(blue ? i : 0);

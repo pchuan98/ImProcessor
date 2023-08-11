@@ -16,8 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\ImProcessor.WpfExtension\ImProcessor.WpfExtension.csproj" />
-		<ProjectReference Include="..\..\src\ImProcessor\ImProcessor.csproj" />
+	  <ProjectReference Include="..\..\src\ImProcessor\ImProcessor.csproj" />
 	</ItemGroup>
+
 
 </Project>
