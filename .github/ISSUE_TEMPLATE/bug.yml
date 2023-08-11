@@ -1,0 +1,59 @@
+name: "🐛 Bug Report"
+description: 提交一个问题 / Report a bug
+title: "[Bug]: "
+labels: ["bug"]
+assignees:
+  - pchuan98
+body:
+  - type: markdown
+    attributes:
+      value: |+
+        **Before asking a question, please note that you have read the FAQ, Doc, and those closed issues. Otherwise the same question will also be closed!**
+
+  # - type: checkboxes
+  #   id: read
+  #   attributes:
+  #     label: 前置阅读 | Pre-reading
+  #     description: 我已经自行查找、阅读以下内容（阅读了请打勾） | I have searched and read the following on my own (Please tick after reading)
+  #     options:
+  #       - label: "[文档/Doc](xxxxxxxxxxxx)"
+  #         required: true
+  #       - label: "[Issues](xxxxxxxxxxxxxxxx)"
+  #         required: true
+  #       - label: "[FAQ](xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)"
+  #         required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: like v0.1-beta.1
+    validations:
+      required: true
+  # - type: dropdown
+  #   id: platform
+  #   attributes:
+  #     label: System Information
+  #     options:
+  #       - Windows
+  #       - Mac
+  #       - Mac(arm64)
+  #       - Linux
+  #       - All
+  #   validations:
+  #     required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Bug reproduce
+      description: Please tell me the bug reproduction process, attach pictures if necessary
+    validations:
+      required: true
+  # - type: textarea
+  #   id: log
+  #   attributes:
+  #     label: 相关日志 | Logs
+  #     description: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - type: markdown
+    attributes:
+      value: |
+        If you have any questions, please feel free to send an email to: <pengchuan@simscop>
