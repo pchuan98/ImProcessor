@@ -14,7 +14,8 @@ namespace ImProcessor.Helper;
 public static class IoHelper
 {
     public static Mat ReadImage(string path)
-    {
-        return Cv2.ImRead(path);
-    }
+        => Cv2.ImRead(path, (ImreadModes)(-1));
+
+    public static void ReadMuiltiImage(out Mat[] mats, string path)
+        => Cv2.ImReadMulti(path, out mats, (ImreadModes)(-1));
 }
