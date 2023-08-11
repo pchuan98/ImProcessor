@@ -3,11 +3,65 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:ImProcessor.Examples"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpf="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
     Title="MainWindow"
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid />
+    <DockPanel>
+
+        <UniformGrid Columns="3" DockPanel.Dock="Top">
+            <hc:PreviewSlider
+                x:Name="S1"
+                Margin="5,0"
+                IsSnapToTickEnabled="False"
+                Maximum="20"
+                Minimum="1"
+                Value="0" />
+            <Slider
+                x:Name="S2"
+                Margin="5,0"
+                IsSnapToTickEnabled="True"
+                Maximum="19"
+                Minimum="0"
+                Value="0" />
+
+            <Slider
+                x:Name="S3"
+                Margin="5,0"
+                IsSnapToTickEnabled="True"
+                Maximum="5"
+                Minimum="0"
+                Value="0" />
+
+        </UniformGrid>
+
+        <UniformGrid Columns="2" Rows="3">
+            <hc:ImageViewer x:Name="PresentViewer" Margin="5" />
+            <wpf:CartesianChart
+                x:Name="PresentChartsView"
+                Margin="5"
+                ZoomMode="None"
+                ZoomingSpeed="0" />
+
+            <hc:ImageViewer x:Name="OriginalViewer" Margin="5" />
+            <wpf:CartesianChart
+                x:Name="OriginalChartsView"
+                Margin="5"
+                ZoomMode="None"
+                ZoomingSpeed="0" />
+
+            <hc:ImageViewer x:Name="CompareViewer" Margin="5" />
+            <wpf:CartesianChart
+                x:Name="CompareChartsView"
+                Margin="5"
+                ZoomMode="None"
+                ZoomingSpeed="0" />
+        </UniformGrid>
+
+
+    </DockPanel>
 </Window>
